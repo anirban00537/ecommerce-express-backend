@@ -5,10 +5,17 @@ const db = require("../config/database");
 const product = require("../models/product");
 const Sequelize = require("sequelize");
 
+
 router.get("/", async (req, res) => {
   const products = await product.findAll();
   res.json(products);
 });
+
+router.get("/find/one/:id", async (req, res) => {
+  const { id } = req.params;
+  const Searchproduct = await product.findAll({ limit: 1, where: { id: id } })
+  res.status(200).json(Searchproduct)
+})
 
 router.get("/search/:query", async (req, res) => {
   const { query } = req.params;
